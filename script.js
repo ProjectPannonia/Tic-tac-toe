@@ -1,3 +1,19 @@
+class GameTable {
+    constructor(firstRowFirst, firstRowSecond, firstRowThird, secondRowFirst, secondRowSecond, secondRowThird, thirdRowFirst, thirdRowSecond, thirdRowThird) {
+        this.first = firstRowFirst;
+        this.second = firstRowSecond;
+        this.third = firstRowThird;
+
+        this.fourth = secondRowFirst;
+        this.fifth = secondRowSecond;
+        this.sixth = secondRowThird;
+
+        this.seventh = thirdRowFirst;
+        this.eight = thirdRowSecond;
+        this.nineth = thirdRowThird;
+    }
+}
+
 let round = 0;
 let maxRound = 9;
 
@@ -6,8 +22,6 @@ const playersBox = document.getElementById('playersBox');
 const firstPlayerName = playersBox.children[0];
 const secondPlayerName = playersBox.children[1];
 
-console.log();
-
 cols.addEventListener('click', function(e){
     console.log(e.target);
     const target = e.target;
@@ -15,6 +29,16 @@ cols.addEventListener('click', function(e){
     writeSymbol(target);
     checkWinner();
 });
+
+cols.addEventListener('mouseover', function(e) {
+    const target = e.target;
+    //target.style.backgroundColor = 'pink';
+    target.style.backgroundColor = 'pink';
+
+    setTimeout(function() {
+       target.style.backgroundColor = 'white'; 
+    }, 500);
+})
 
 let switchPlayerName = () => {
     if(round % 2 === 0) {
@@ -39,89 +63,49 @@ let writeSymbol = (target) => {
     }
 }
 
-class GameTable {
-    constructor(firstRowFirst, firstRowSecond, firstRowThird, secondRowFirst, secondRowSecond, secondRowThird, thirdRowFirst, thirdRowSecond, thirdRowThird) {
-        this.first = firstRowFirst;
-        this.second = firstRowSecond;
-        this.third = firstRowThird;
-
-        this.fourth = secondRowFirst;
-        this.fifth = secondRowSecond;
-        this.sixth = secondRowThird;
-
-        this.seventh = thirdRowFirst;
-        this.eight = thirdRowSecond;
-        this.nineth = thirdRowThird;
-    }
-    
-}
-let compareSymbols = (s1, s2, s3) => {
-    let equals = false;
-    if(s1 !== '' && s1 === s2 && s1 === s3) {
-        equals = true;
-    } else if(s2 !== '' && s2 === s1 && s2 === s3) {
-        equals = true;
-    } else if(s3 !== '' && s3 === s1 && s3 === s2) {
-        equals = true;
-    }
-
-    return equals;
-}
 let checkWinner = () => {
-    let ffParent = document.getElementById('top_left');
-    let ff = ffParent.innerText;
-    let fsParent = document.getElementById('top_center');
-    let fs = fsParent.innerText;
-    let ftParent = document.getElementById('top_right');
-    let ft = ftParent.innerText;
-
-    let sfParent = document.getElementById('center_left');
-    let sf = sfParent.innerText;
-    let ssParent = document.getElementById('center_center');
-    let ss = ssParent.innerText;
-    let stParent = document.getElementById('center_right');
-    let st = stParent.innerText;
-
-    let tfParent = document.getElementById('bottom_left');
-    let tf = tfParent.innerText;
-    let tsParent = document.getElementById('bottom_center');
-    let ts = tsParent.innerText;
-    let ttParent = document.getElementById('bottom_right');
-    let tt = ttParent.innerText;
-
-    //const actualTable = new GameTable(ff,fs,ft,sf,ss,st,tf,ts,tt);
-    if(ff !== '' && (ff === fs) && (ff === ft)) {
-        // first row true
-        colorWinnerFields(ffParent, fsParent, ftParent);
-        console.log('first row true' + ', ' );
-    } else if(sf !== '' && sf === ss && sf === st) {
-        // second row true
-        colorWinnerFields(sfParent, ssParent, stParent);
-        console.log('second row true');
-    } else if(tf !== '' && tf === ts && tf === tt) {
-        // third row true
-        colorWinnerFields(tfParent, tsParent, ttParent);
-        console.log('third row true');
-    } else if(ff !== '' && ff === sf && ff === tf) {
-        // first column true
-        colorWinnerFields(ffParent, sfParent, tfParent);
-        console.log('first column true');
-    } else if(fs !== '' && fs === ss && fs === ts) {
-        // second column true
-        colorWinnerFields(fsParent, ssParent, tsParent);
-        console.log('second column true');
-    } else if(ft !== '' && ft === st && ft === tt) {
-        // third column true
-        colorWinnerFields(ftParent, stParent, ttParent);
-        console.log('third column true');
-    } else if(ff !== '' && ff === ss && ff === tt) {
-        // diagonal 1 true
-        colorWinnerFields(ffParent, ssParent, ttParent);
-        console.log('diagonal 1 true');
-    } else if(ft !== '' && ft === ss && ft === tf) {
-        // diagonal 2 true
-        colorWinnerFields(ftParent, ssParent, tfParent);
-        console.log('diagonal 2 true');
+    const table = new GameTable(document.getElementById('top_left'),
+                                document.getElementById('top_center'),
+                                document.getElementById('top_right'),
+                                document.getElementById('center_left'),
+                                document.getElementById('center_center'),
+                                document.getElementById('center_right'),
+                                document.getElementById('bottom_left'),
+                                document.getElementById('bottom_center'),
+                                document.getElementById('bottom_right'));
+                                
+    const firstRowMatch = table.first.innerText !== '' && (table.first.innerText === table.second.innerText) && (table.first.innerText === table.third.innerText);
+    const secondRowMatch = table.fourth.innerText !== '' && (table.fourth.innerText === table.fifth.innerText && table.fourth.innerText === table.sixth.innerText);
+    const thirdRowMatch = table.seventh.innerText !== '' && (table.seventh.innerText === table.eight.innerText && table.seventh.innerText === table.nineth.innerText); 
+    const firstColumnMatch = table.first.innerText !== '' && (table.first.innerText === table.fourth.innerText && table.first.innerText === table.seventh.innerText);
+    const secondColumMatch = table.second.innerText !== '' && (table.second.innerText === table.fifth.innerText && table.fifth.innerText === table.eight.innerText);
+    const thirdColumnMatch = table.third.innerText !== '' && (table.third.innerText === table.sixth.innerText && table.third.innerText === table.nineth.innerText);
+    const diagonalMatchOne = table.first.innerText !== '' && (table.first.innerText === table.fifth.innerText && table.first.innerText === table.nineth.innerText);
+    const diagonalMatchTwo = table.third.innerText !== '' && (table.third.innerText === table.fifth.innerText && table.third.innerText === table.seventh.innerText);
+    
+    switch(true) {
+        case firstRowMatch :
+            colorWinnerFields(table.first,table.second, table.third);
+            break;
+        case secondRowMatch :
+            colorWinnerFields(table.fourth, table.fifth, table.sixth);
+            break;
+        case thirdRowMatch:
+            colorWinnerFields(table.seventh, table.eight, table.nineth);
+            break;
+        case firstColumnMatch:
+            colorWinnerFields(table.first, table.fourth,table.seventh);
+            break;
+        case secondColumMatch:
+            colorWinnerFields(table.second, table.fifth, table.eight);
+            break;
+        case thirdColumnMatch:
+            colorWinnerFields(table.third, table.sixth, table.nineth);
+        case diagonalMatchOne:
+            colorWinnerFields(table.first, table.fifth,table.nineth);
+            break;
+        case diagonalMatchTwo:
+            colorWinnerFields(table.third,table.fifth, table.seventh);
     }
 }
 let colorWinnerFields = (s1,s2,s3) => {
@@ -139,8 +123,10 @@ let clearFields = () => {
     round = 0;
     let colElements = cols.getElementsByClassName('col');
     
-    for(key in colElements) {
-        console.log('Key: ' + key);
-        //key.style.backgroundColor = 'white';
+    for(let item of colElements) {
+        item.style.backgroundColor = 'white';
+        item.innerText = '';
+        secondPlayerName.classList.remove('activePlayer');
+        firstPlayerName.classList.add('activePlayer');
     }
 }

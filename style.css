@@ -30,7 +30,7 @@
     width: 900px;
     height: 900px;
     display: flex;
-    border: 1px dashed black;
+    border: 1px dashed white;
     margin: 1vh auto;
     flex-direction: column;
     flex-wrap: wrap;
