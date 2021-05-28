@@ -33,7 +33,7 @@
     border: 1px dashed black;
     margin: 1vh auto;
     flex-direction: column;
-
+    flex-wrap: wrap;
 }
 .row {
     width: 900px;
@@ -47,8 +47,10 @@
     font-size: 100px;
     text-align: center;
     padding: 60px;
+    border: 1px solid black;
 }
 
+/*
 #top_left, #top_center, #top_right, #center_left, #center_center, #center_right {
     border-bottom: 3px solid black;
 }
@@ -58,3 +60,4 @@
 #top_right, #center_right, #bottom_right {
     border-left: 3px solid black;
 }
+*/
