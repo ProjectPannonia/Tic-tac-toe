@@ -23,7 +23,6 @@ const firstPlayerName = playersBox.children[0];
 const secondPlayerName = playersBox.children[1];
 
 cols.addEventListener('click', function(e){
-    console.log(e.target);
     const target = e.target;
     switchPlayerName();
     writeSymbol(target);
@@ -32,21 +31,20 @@ cols.addEventListener('click', function(e){
 
 cols.addEventListener('mouseover', function(e) {
     const target = e.target;
-    //target.style.backgroundColor = 'pink';
     target.style.backgroundColor = 'pink';
 
     setTimeout(function() {
        target.style.backgroundColor = 'white'; 
     }, 500);
-})
+});
 
 let switchPlayerName = () => {
     if(round % 2 === 0) {
         firstPlayerName.classList.remove('activePlayer');
         secondPlayerName.classList.add('activePlayer');
     } else {
-        secondPlayerName.classList.remove('activePlayer');
         firstPlayerName.classList.add('activePlayer');
+        secondPlayerName.classList.remove('activePlayer');
     }
 }
 let writeSymbol = (target) => {
@@ -55,9 +53,11 @@ let writeSymbol = (target) => {
         alert('Invalid step');
     } else {
         if(round % 2 == 0) {
+            target.style.color = 'red';
             target.innerText= 'X';
         } else {
             target.innerText = 'O';
+            target.style.color = 'black';
         }
         round++;
     }
@@ -106,6 +106,10 @@ let checkWinner = () => {
             break;
         case diagonalMatchTwo:
             colorWinnerFields(table.third,table.fifth, table.seventh);
+            break;
+        case round === 9:
+            alert('Cats game!');
+            clearFields();
     }
 }
 let colorWinnerFields = (s1,s2,s3) => {
